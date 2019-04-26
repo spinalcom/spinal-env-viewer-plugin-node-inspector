@@ -19,7 +19,8 @@
 
 <script>
   import { NodeInspector } from "spinal-env-viewer-vue-components-lib";
-  import {SpinalGraphService} from 'spinal-env-viewer-graph-service'
+  import { SpinalGraphService } from 'spinal-env-viewer-graph-service'
+
   export default {
     name: "node-inspector-modal",
     components: { NodeInspector },
@@ -47,15 +48,20 @@
       },
       closed: function () {
       },
-      removed: function (event) {
-        SpinalGraphService.removeFromGraph( event.id.get())
+      removed: function ( event ) {
+        SpinalGraphService.removeFromGraph( event.get() )
+        for (let i = 0; i < this.childInfo.length; i++) {
+          const child = this.childInfo[i];
+          if (child.id.get() == event.get())
+            this.childInfo.splice(id)
+        }
       },
-      getChildren: function (event) {
-        SpinalGraphService.getChildren(this.inspectedNode.id.get(), [event])
-          .then(children => {
+      getChildren: function ( event ) {
+        SpinalGraphService.getChildren( this.inspectedNode.id.get(), [event] )
+          .then( children => {
             this.childInfo = [];
-            this.childInfo.push(...children);
-          })
+            this.childInfo.push( ...children );
+          } )
       }
     },
     watch: {
@@ -75,8 +81,8 @@
 </script>
 
 <style scoped>
-.node-inspector{
-    margin: 16px;
-    width: 30vw;
-}
+    .node-inspector {
+        margin: 16px;
+        width: 30vw;
+    }
 </style>
