@@ -6,9 +6,11 @@ import { NodeInspectorButton } from "./src/button/NodeInspectorButton";
 
 
 const sideBarName = "GraphManagerSideBar";
-
-spinalContextMenuService.registerApp( sideBarName, new NodeInspectorButton() );
-
+const circularMenu = "circularMenu";
+spinalContextMenuService.registerApp(sideBarName, new NodeInspectorButton(),
+  [7]);
+spinalContextMenuService.registerApp(circularMenu, new NodeInspectorButton(),
+  [7]);
 SpinalMountExtention.mount( {
   name: 'plugin-node-inspector',
   vueMountComponent: vue.extend( NodeInspectorModal ),
