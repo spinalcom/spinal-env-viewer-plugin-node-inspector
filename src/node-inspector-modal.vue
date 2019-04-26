@@ -6,6 +6,7 @@
                 :childInfo="childInfo"
                 :relationNames="relationNames"
                 @get-children="getChildren($event)"
+                @remove-from-parent="removed($event)"
         />
         <md-dialog-actions>
             <md-button class="md-primary" v-on:click="display = false">
@@ -46,12 +47,12 @@
       },
       closed: function () {
       },
-      removed: function () {
+      removed: function (event) {
+        SpinalGraphService.removeFromGraph( event.id.get())
       },
       getChildren: function (event) {
         SpinalGraphService.getChildren(this.inspectedNode.id.get(), [event])
           .then(children => {
-
             this.childInfo = [];
             this.childInfo.push(...children);
           })
