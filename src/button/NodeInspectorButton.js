@@ -3,7 +3,11 @@ import {
 } from "spinal-env-viewer-context-menu-service";
 
 import { spinalPanelManagerService } from "spinal-env-viewer-panel-manager-service";
-import {SPINAL_RELATION_PTR_LST_TYPE} from 'spinal-env-viewer-graph-service'
+import {
+  SpinalNode,
+  SpinalGraphService,
+  SPINAL_RELATION_PTR_LST_TYPE
+} from 'spinal-env-viewer-graph-service'
 
 export  class NodeInspectorButton extends SpinalContextApp {
   
@@ -17,15 +21,26 @@ export  class NodeInspectorButton extends SpinalContextApp {
   }
   
   isShown( option ) {
-    if (option.hasOwnProperty( 'selectedNode' )) {
-      return Promise.resolve( true );
+    if (option.hasOwnProperty('selectedNode')) {
+      return Promise.resolve(true);
     }
-    
-    return Promise.resolve( -1);
+    if (option.exist || option.hasOwnProperty('selectedNode')) {
+        return Promise.resolve(true);
+    } else {
+      return Promise.resolve(-1);
+    }
   }
   
   action( option ) {
-    const param = { selectedNode: option.selectedNode };
+    let selectedNode = option.selectedNode;
+
+    if (option.selectedNode instanceof SpinalNode) {
+      SpinalGraphService._addNode(option.selectedNode);
+      selectedNode = SpinalGraphService.getInfo(option.selectedNode.getId());
+    }
+    const param = {
+      selectedNode: selectedNode
+    };
     spinalPanelManagerService.openPanel( "plugin-node-inspector", param );
   }
   
