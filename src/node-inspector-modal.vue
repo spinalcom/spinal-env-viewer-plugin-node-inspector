@@ -53,7 +53,7 @@
         for (let i = 0; i < this.childInfo.length; i++) {
           const child = this.childInfo[i];
           if (child.id.get() == event.get())
-            this.childInfo.splice(id)
+            this.childInfo.splice(i)
         }
       },
       getChildren: function ( event ) {
