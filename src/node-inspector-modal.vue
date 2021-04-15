@@ -167,7 +167,6 @@ export default {
       console.log(realNode);
       const sortedArray = this.$refs.nodeInspector.returnSort();
       const relationName = this.$refs.nodeInspector.relationName;
-      console.log(sortedArray, relationName);
       reorderChildren(realNode, relationName, sortedArray);
       // this.childInfo = data;
     },
